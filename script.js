@@ -99,7 +99,7 @@ let QUESTIONS = {
         question: "test9",
         correctAnswer: "correct9",
         wrongAnswers: ["asd", "Cфв2", "C3fd"],
-        allAnswers: shuffle(["correct8", "asd", "Cфв2", "C3fd"]),
+        allAnswers: shuffle(["correct9", "asd", "Cфв2", "C3fd"]),
     },
     hard5: {
         question: "test10",
@@ -122,7 +122,7 @@ let forTextObject = {
         QUESTIONS.hard1, QUESTIONS.hard2, QUESTIONS.hard3, QUESTIONS.hard4, QUESTIONS.hard5, QUESTIONS.hard6,
     ],
     check: true,
-    indexOfCorrectAnswer: -1,
+    indexOfCorrectAnswer: 0,
     cnt: 0,
 }
 // end-------------------------------------
@@ -286,15 +286,36 @@ function moveAnswerBlocks() {
     // если блок с ответами соприкасается с блоком модельки
     if (answerOBJECT.y < GAME.height - MODEL.height - 20) {
         if (answerOBJECT.y >= MODEL.y - MODEL.height - 20) {
-            // смещение главной модельки на исходное положение
-            comeBackToStartPosition()
-            // увеличение скорости моделек ответов
-            increasingSpeed()
+            let state = isTrue(MODEL.x);
+            if (state === true) {
+                // смещение главной модельки на исходное положение
+                comeBackToStartPosition();
+                // увеличение скорости моделек ответов
+                increasingSpeed();
+            } else {
+                alert('fail')
+            }
         }
         answerOBJECT.y += answerOBJECT.speed;
     } else {
         answerOBJECT.y = 100;
     }
+}
+
+function isTrue(x) {
+    let state = forTextObject.indexOfCorrectAnswer;
+    let text = `state - ${state}; x - ${x}; MODEL.x - ${MODEL.x}`
+    // alert(text)
+    if (x === 480 && state === 3) {
+        return true;
+    } else if (x === 320 && state === 2) {
+        return true;
+    } else if (x === 160 && state === 1) {
+        return true;
+    } else if (x === 0 && state === 0) {
+        return true;
+    }
+    return false;
 }
 
 // end-------------------------------------
