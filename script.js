@@ -45,46 +45,73 @@ let QUESTIONS = {
         question: "test",
         correctAnswer: "correct",
         wrongAnswers: ["wrong1", "wrong2", "wrong3"],
+        allAnswers: shuffle(["correct", "wrong1", "wrong2", "wrong3"]),
     },
     easy2: {
         question: "test1",
         correctAnswer: "correct1",
         wrongAnswers: ["w1", "w2", "w3"],
+        allAnswers: shuffle(["correct1", "w1", "w2", "w3"]),
     },
     easy3: {
         question: "test2",
         correctAnswer: "correct2",
         wrongAnswers: ["1", "2", "3"],
+        allAnswers: shuffle(["correct2", "1", "2", "3"]),
     },
     medium1: {
         question: "test3",
         correctAnswer: "correct3",
         wrongAnswers: ["5", "6", "7"],
+        allAnswers: shuffle(["correct3", "5", "6", "7"]),
     },
     medium2: {
         question: "test4",
         correctAnswer: "correct4",
         wrongAnswers: ["8", "9", "10"],
+        allAnswers: shuffle(["correct4", "8", "9", "10"]),
     },
     medium3: {
         question: "test5",
         correctAnswer: "correct5",
         wrongAnswers: ["D3", "D2", "D1"],
+        allAnswers: shuffle(["correct5", "D3", "D2", "D1"]),
     },
     hard1: {
         question: "test6",
         correctAnswer: "correct6",
         wrongAnswers: ["A2", "A1", "A3"],
+        allAnswers: shuffle(["correct6", "A2", "A1", "A3"]),
     },
     hard2: {
         question: "test7",
         correctAnswer: "correct7",
         wrongAnswers: ["B1", "B2", "B3"],
+        allAnswers: shuffle(["correct7", "B1", "B2", "B3"]),
     },
     hard3: {
         question: "test8",
         correctAnswer: "correct8",
         wrongAnswers: ["C1", "C2", "C3"],
+        allAnswers: shuffle(["correct8", "C1", "C2", "C3"]),
+    },
+    hard4: {
+        question: "test9",
+        correctAnswer: "correct9",
+        wrongAnswers: ["asd", "Cфв2", "C3fd"],
+        allAnswers: shuffle(["correct8", "asd", "Cфв2", "C3fd"]),
+    },
+    hard5: {
+        question: "test10",
+        correctAnswer: "correct10",
+        wrongAnswers: ["C11", "C21", "C31"],
+        allAnswers: shuffle(["correct10", "C11", "C21", "C31"]),
+    },
+    hard6: {
+        question: "test11",
+        correctAnswer: "correct11",
+        wrongAnswers: ["C12", "C22", "C32"],
+        allAnswers: shuffle(["correct11", "C12", "C22", "C32"]),
     },
 }
 
@@ -92,7 +119,7 @@ let forTextObject = {
     levels: [
         QUESTIONS.easy1, QUESTIONS.easy2, QUESTIONS.easy3,
         QUESTIONS.medium1, QUESTIONS.medium2, QUESTIONS.medium3,
-        QUESTIONS.hard1, QUESTIONS.hard2, QUESTIONS.hard3
+        QUESTIONS.hard1, QUESTIONS.hard2, QUESTIONS.hard3, QUESTIONS.hard4, QUESTIONS.hard5, QUESTIONS.hard6,
     ],
     check: true,
     indexOfCorrectAnswer: -1,
@@ -181,48 +208,41 @@ function drawMainModel() {
     ctx.closePath();
 }
 
-// for drawing answer and question text
-// ---------------------------
-var cnt = 0;
-var correct = forTextObject.levels[forTextObject.cnt].correctAnswer;
-var wrong1 = forTextObject.levels[forTextObject.cnt].wrongAnswers[0];
-var wrong2 = forTextObject.levels[forTextObject.cnt].wrongAnswers[1];
-var wrong3 = forTextObject.levels[forTextObject.cnt].wrongAnswers[2];
-var answersList = [correct, wrong1, wrong2, wrong3];
-
-// ---------------------------
-
 function prepareToDrawAnswerText() {
+    let level = forTextObject.levels[forTextObject.cnt];
     if (forTextObject.check === true) {
-        answersList = shuffle(answersList);     // !!!!!!!!!! не перемешивает список, хотя условие проходит
         forTextObject.check = false;
 
-        if (forTextObject.cnt < forTextObject.levels.length - 1) {
+        if (MODEL.score <= forTextObject.levels.length - 1) {
             forTextObject.cnt += 1;
         } else {
             forTextObject.cnt = 0;
         }
     }
-    forTextObject.indexOfCorrectAnswer = answersList.indexOf(correct);
+    forTextObject.indexOfCorrectAnswer = level.allAnswers.indexOf(level.correctAnswer);
+    return level
 }
 
+
 function drawAnswerText() {
-    prepareToDrawAnswerText()
+    let level = prepareToDrawAnswerText()
     ctx.beginPath();
     ctx.fillStyle = "#0004FA";
     ctx.font = "20pt avenir";
-    ctx.fillText(answersList[0], answerOBJECT.x + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
-    ctx.fillText(answersList[1], answerOBJECT.x + 40 + answerOBJECT.width + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
-    ctx.fillText(answersList[2], answerOBJECT.x + 40 * 2 + answerOBJECT.width * 2 + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
-    ctx.fillText(answersList[3], answerOBJECT.x + 40 * 3 + answerOBJECT.width * 3 + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
+    ctx.fillText(level.allAnswers[0], answerOBJECT.x + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
+    ctx.fillText(level.allAnswers[1], answerOBJECT.x + 40 + answerOBJECT.width + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
+    ctx.fillText(level.allAnswers[2], answerOBJECT.x + 40 * 2 + answerOBJECT.width * 2 + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
+    ctx.fillText(level.allAnswers[3], answerOBJECT.x + 40 * 3 + answerOBJECT.width * 3 + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
     ctx.closePath();
+    return level
 }
 
 function drawQuestionText() {
+    let level = drawAnswerText()
     ctx.beginPath();
     ctx.fillStyle = "#1F2533";
     ctx.font = "bold 28pt avenir";
-    ctx.fillText(forTextObject.levels[forTextObject.cnt].question, 30, 60);
+    ctx.fillText(level.question, 30, 60);
     ctx.closePath();
 }
 
@@ -234,9 +254,9 @@ function drawScore() {
 
 function drawGame() {
     ctx.clearRect(0, 0, GAME.width, GAME.height);
-    drawQuestionText();
     drawScore();
     drawAnswerBlocks();
+    drawQuestionText();
     drawAnswerText();
     drawMainModel();
 }
@@ -246,25 +266,30 @@ function drawGame() {
 
 // FUNCTIONS GAMEPLAY
 // start-----------------------------------
-function moveAnswerBlocks() {
-    let win_coords = {
-        0: 0,
-        1: 160,
-        2: 320,
-        3: 480,
+function increasingSpeed() {
+    if (MODEL.score >= 30) {
+        answerOBJECT.speed = 5.5;
+    } else {
+        answerOBJECT.speed *= 1.08;
     }
+    MODEL.score += 1;
+}
+
+function comeBackToStartPosition() {
+    answerOBJECT.y = 100;
+    MODEL.x = 120 + 40;
+    MODEL.y = canvasHeight - 80;
+    forTextObject.check = true;
+}
+
+function moveAnswerBlocks() {
+    // если блок с ответами соприкасается с блоком модельки
     if (answerOBJECT.y < GAME.height - MODEL.height - 20) {
         if (answerOBJECT.y >= MODEL.y - MODEL.height - 20) {
-            answerOBJECT.y = 100;
-            if (MODEL.score >= 30) {
-                answerOBJECT.speed = 5.5;
-            } else {
-                answerOBJECT.speed *= 1.08;
-            }
-            MODEL.score += 1;
-            MODEL.x = 120 + 40;
-            MODEL.y = canvasHeight - 80;
-            forTextObject.check = true;
+            // смещение главной модельки на исходное положение
+            comeBackToStartPosition()
+            // увеличение скорости моделек ответов
+            increasingSpeed()
         }
         answerOBJECT.y += answerOBJECT.speed;
     } else {
@@ -275,9 +300,9 @@ function moveAnswerBlocks() {
 // end-------------------------------------
 
 function main() {
+    initEventsListeners();
     drawGame();
     moveAnswerBlocks();
-    initEventsListeners();
     requestAnimationFrame(main);
 }
 
