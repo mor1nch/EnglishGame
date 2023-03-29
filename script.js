@@ -15,8 +15,12 @@ canvas.height = canvasHeight;
 // start-----------------------------------
 const img_rocket = new Image();
 img_rocket.src = 'static/img/rocket.png';
+
 const img_cloud = new Image();
 img_cloud.src = 'static/img/clouds2.png';
+
+const img_reload_button = new Image();
+img_reload_button.src = 'static/img/reload.png';
 // end-------------------------------------
 
 
@@ -161,7 +165,7 @@ let QUESTIONS = {
     },
 };
 
-var levels_list = [
+let levels_list = [
     QUESTIONS.presentSimple1, QUESTIONS.presentSimple2, QUESTIONS.presentSimple3,
     QUESTIONS.presentSimple4, QUESTIONS.presentSimple5, QUESTIONS.presentSimple6,
     QUESTIONS.pastSimple1, QUESTIONS.pastSimple2, QUESTIONS.pastSimple3,
@@ -220,39 +224,15 @@ function modelPositionLimits() {
 function shuffle(array) {
     let currentIndex = array.length, randomIndex;
 
-    // While there remain elements to shuffle.
-    while (currentIndex != 0) {
-
-        // Pick a remaining element.
+    while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
-
-        // And swap it with the current element.
         [array[currentIndex], array[randomIndex]] = [
             array[randomIndex], array[currentIndex]];
     }
+
     return array;
 }
-
-// function Restart() {
-//     canvasContext1.clearRect(0, 0, window.innerWidth, window.innerHeight)
-//     document.body.removeChild(rule)
-//
-//     let gameVic = document.createElement("img");
-//     gameVic.src = './imgs/rel.png';
-//
-//     gameVic.style.position = "absolute"
-//     gameVic.style.width = window.innerWidth / 6 + "px"
-//     gameVic.style.height = window.innerHeight / 7 + "px"
-//     gameVic.style.top = '85%'
-//     gameVic.style.left = '50%'
-//     gameVic.style.transform = 'translate(-50%, -50%)'
-//     document.body.appendChild(gameVic)
-//
-//     gameVic.addEventListener('click', function () {
-//         location.reload()
-//     })
-// }
 
 // end-------------------------------------
 
@@ -331,7 +311,7 @@ function drawQuestionText() {
 function drawFinishGameScreen() {
     let text = `Your score: ${MODEL.score}`;
     ctx.clearRect(0, 0, GAME.width, GAME.height);
-    ctx.fillStyle = answerOBJECT.color;
+    ctx.fillStyle = '#000000';
     ctx.font = "36px avenir";
     ctx.textAlign = "center";
     ctx.fillText(text, GAME.width / 2 - 10, GAME.height / 2);
@@ -343,6 +323,20 @@ function drawScore() {
     ctx.fillText("Score: " + MODEL.score, GAME.width / 2 - 60, GAME.height / 2 - 50);
 }
 
+function drawReloadButton() {
+    img_reload_button.style.position = "absolute"
+    img_reload_button.style.width = '50px'
+    img_reload_button.style.height = '50px'
+    img_reload_button.style.top = '4%'
+    img_reload_button.style.left = '69%'
+    img_reload_button.style.transform = 'translate(-50%, -50%)'
+    document.body.appendChild(img_reload_button)
+
+    img_reload_button.addEventListener('click', function () {
+        window.location.reload();
+    })
+}
+
 function drawGame() {
     ctx.clearRect(0, 0, GAME.width, GAME.height);
     drawScore();
@@ -350,6 +344,7 @@ function drawGame() {
     drawQuestionText();
     drawAnswerText();
     drawMainModel();
+    drawReloadButton();
 }
 
 // end-------------------------------------
@@ -389,8 +384,8 @@ function isTrue(x) {
 
 function moveAnswerBlocks() {
     // если блок с ответами соприкасается с блоком модельки
-    if (answerOBJECT.y < GAME.height - MODEL.height + 20) {
-        if (answerOBJECT.y >= MODEL.y - MODEL.height + 20) {
+    if (answerOBJECT.y < GAME.height - MODEL.height + 15) {
+        if (answerOBJECT.y >= MODEL.y - MODEL.height + 15) {
             let state = isTrue(MODEL.x);
             if (state === true) {
                 // смещение главной модельки на исходное положение
