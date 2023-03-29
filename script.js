@@ -163,6 +163,114 @@ let QUESTIONS = {
         allAnswers: shuffle(["won’t", "willn’t", "don’t", "aren’t"]),
         theme: "Future Simple",
     },
+    presentContinuous1: {
+        question: "I am _ now.",
+        correctAnswer: "working",
+        allAnswers: shuffle(["working", "work", "works", "worked"]),
+        theme: "Present Continuous",
+    },
+    presentContinuous2: {
+        question: "Kate _ studying at the moment.",
+        correctAnswer: "isn’t",
+        allAnswers: shuffle(["isn’t", "doesn’t", "aren’t", "didn’t"]),
+        theme: "Present Continuous",
+    },
+    presentContinuous3: {
+        question: "What _ she watching now?",
+        correctAnswer: "is",
+        allAnswers: shuffle(["is", "does", "did", "has"]),
+        theme: "Present Continuous",
+    },
+    presentContinuous4: {
+        question: "I’m _ my clothes at the moment.",
+        correctAnswer: "washing",
+        allAnswers: shuffle(["washing", "wash", "washes", "washed"]),
+        theme: "Present Continuous",
+    },
+    presentContinuous5: {
+        question: "They _ to Rome next Monday.",
+        correctAnswer: "are moving",
+        allAnswers: shuffle(["are moving", "moved", "move", "moving"]),
+        theme: "Present Continuous",
+    },
+    presentContinuous6: {
+        question: "This tree _ so fast.",
+        correctAnswer: "is growing",
+        allAnswers: shuffle(["is growing", "grows", "growing", "is"]),
+        theme: "Present Continuous",
+    },
+    pastContinuous1: {
+        question: "I _ a book at 9 pm last night.",
+        correctAnswer: "was reading",
+        allAnswers: shuffle(["was reading", "reading", "read", "has read"]),
+        theme: "Past Continuous",
+    },
+    pastContinuous2: {
+        question: "This time last year he was _ in London.",
+        correctAnswer: "living",
+        allAnswers: shuffle(["living", "was living", "lived", "lives"]),
+        theme: "Past Continuous",
+    },
+    pastContinuous3: {
+        question: "She was driving home when I _ her.",
+        correctAnswer: "saw",
+        allAnswers: shuffle(["saw", "seen", "see", "am seeing"]),
+        theme: "Past Continuous",
+    },
+    pastContinuous4: {
+        question: "He was singing when I _ the room.",
+        correctAnswer: "entered",
+        allAnswers: shuffle(["entered", "enter", "am entering", "was enter"]),
+        theme: "Past Continuous",
+    },
+    pastContinuous5: {
+        question: "Sarah _ cooking when I called her.",
+        correctAnswer: "wasn’t",
+        allAnswers: shuffle(["wasn’t", "doesn’t", "didn’t", "isn’t"]),
+        theme: "Past Continuous",
+    },
+    pastContinuous6: {
+        question: "What were you _ there?",
+        correctAnswer: "doing",
+        allAnswers: shuffle(["doing", "do", "did", "done"]),
+        theme: "Past Continuous",
+    },
+    presentPerfect1: {
+        question: "They _ lived in Paris since 1996.",
+        correctAnswer: "have",
+        allAnswers: shuffle(["have", "has", "-", "had"]),
+        theme: "Present Perfect",
+    },
+    presentPerfect2: {
+        question: "We haven't _ Camille today.",
+        correctAnswer: "seen",
+        allAnswers: shuffle(["seen", "saw", "see", "seeing"]),
+        theme: "Present Perfect",
+    },
+    presentPerfect3: {
+        question: "Have you _ your project yet?",
+        correctAnswer: "finished",
+        allAnswers: shuffle(["finished", "finish", "finished", "finishing"]),
+        theme: "Present Perfect",
+    },
+    presentPerfect4: {
+        question: "I’ve _ five pages this morning.",
+        correctAnswer: "written",
+        allAnswers: shuffle(["written", "wrote", "write", "writing"]),
+        theme: "Present Perfect",
+    },
+    presentPerfect5: {
+        question: "She has finished _ serial this week.",
+        correctAnswer: "watching",
+        allAnswers: shuffle(["watching", "watched", "watch", "watches"]),
+        theme: "Present Perfect",
+    },
+    presentPerfect6: {
+        question: "I have _ Bratislava",
+        correctAnswer: "been to",
+        allAnswers: shuffle(["been to", "been in", "be to", "be in"]),
+        theme: "Present Perfect",
+    },
 };
 
 let levels_list = [
@@ -172,6 +280,12 @@ let levels_list = [
     QUESTIONS.pastSimple4, QUESTIONS.pastSimple5, QUESTIONS.pastSimple6,
     QUESTIONS.futureSimple1, QUESTIONS.futureSimple2, QUESTIONS.futureSimple3,
     QUESTIONS.futureSimple4, QUESTIONS.futureSimple5, QUESTIONS.futureSimple6,
+    QUESTIONS.presentContinuous1, QUESTIONS.presentContinuous2, QUESTIONS.presentContinuous3,
+    QUESTIONS.presentContinuous4, QUESTIONS.presentContinuous5, QUESTIONS.presentContinuous6,
+    QUESTIONS.pastContinuous1, QUESTIONS.pastContinuous2, QUESTIONS.pastContinuous3,
+    QUESTIONS.pastContinuous4, QUESTIONS.pastContinuous5, QUESTIONS.pastContinuous6,
+    QUESTIONS.presentPerfect1, QUESTIONS.presentPerfect2, QUESTIONS.presentPerfect3,
+    QUESTIONS.presentPerfect4, QUESTIONS.presentPerfect5, QUESTIONS.presentPerfect6,
 ];
 
 let forAnswersText = {
@@ -309,13 +423,40 @@ function drawQuestionText() {
 }
 
 function drawFinishGameScreen() {
-    let text = `Your score: ${MODEL.score}`;
+    let score_text = `Your score: ${MODEL.score}`;
+    let themes_list = ['Present Simple', 'Past Simple', 'Future Simple', 'Present Continuous', 'Past Continuous', 'Present Perfect']
     ctx.beginPath();
     ctx.clearRect(0, 0, GAME.width, GAME.height);
     ctx.fillStyle = '#000000';
-    ctx.font = "36px avenir";
+    ctx.font = "bold 30px avenir";
     ctx.textAlign = "center";
-    ctx.fillText(text, GAME.width / 2 - 10, GAME.height / 2);
+    ctx.fillText('All themes:', GAME.width / 2 - 10, GAME.height / 2 - 300);
+
+    ctx.fillStyle = '#3d3d3d';
+    ctx.font = "italic 30px avenir";
+    ctx.textAlign = "center";
+    for (let i = 0; i < themes_list.length; i ++) {
+        ctx.fillText(themes_list[i], GAME.width / 2 - 10, GAME.height / 2 - 250 + 40 * i);
+    }
+
+    ctx.fillStyle = '#000000';
+    ctx.font = "bold 38px avenir";
+    ctx.textAlign = "center";
+    ctx.fillText('The training is over', GAME.width / 2 - 10, GAME.height / 2 + 50);
+
+    ctx.fillStyle = '#0000CD';
+    ctx.font = "bold 36px avenir";
+    ctx.textAlign = "center";
+    ctx.fillText(score_text, GAME.width / 2 - 10, GAME.height / 2 + 130);
+
+    ctx.fillStyle = '#006400';
+    ctx.font = "28px avenir";
+    ctx.textAlign = "center";
+    ctx.fillText("Let's go again", GAME.width / 2 - 10, GAME.height / 2 + 230);
+
+    ctx.fillStyle = '#8B0000';
+    ctx.font = "24px avenir";
+    ctx.fillText("Click the button in the upper right corner ", GAME.width / 2 - 10, GAME.height / 2 + 280);
     ctx.closePath();
 }
 
@@ -410,7 +551,7 @@ function moveAnswerBlocks() {
 // end-------------------------------------
 
 function main() {
-    if (MODEL.score === forAnswersText.levels.length - 1) {
+    if (MODEL.score === 30) {
         drawFinishGameScreen();
     } else {
         initEventsListeners();
