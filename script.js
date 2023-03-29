@@ -186,6 +186,19 @@ let forAnswersText = {
 
 // FUNCTIONS SETTINGS
 // start-----------------------------------
+function shuffle(array) {
+    let currentIndex = array.length, randomIndex;
+
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
+
 function initEventsListeners() {
     window.addEventListener("keydown", gameControl);
 }
@@ -221,40 +234,6 @@ function modelPositionLimits() {
     }
 }
 
-function shuffle(array) {
-    let currentIndex = array.length, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-    }
-
-    return array;
-}
-
-// end-------------------------------------
-
-
-// FUNCTIONS DRAW
-// start-----------------------------------
-function drawAnswerBlocks() {
-    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height)
-    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + answerOBJECT.width + answerOBJECT.offset, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height)
-    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 2, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height)
-    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 3, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height)
-}
-
-function drawMainModel() {
-    ctx.drawImage(img_rocket, MODEL.x, MODEL.y, MODEL.width, MODEL.height)
-    ctx.beginPath();
-    ctx.moveTo(0, 99);
-    ctx.lineTo(canvasWidth, 99);
-    ctx.stroke();
-    ctx.closePath();
-}
-
 function prepareToDrawAnswerText() {
     let level = forAnswersText.levels[forAnswersText.cnt];
     if (forAnswersText.check === true) {
@@ -267,17 +246,38 @@ function prepareToDrawAnswerText() {
         }
     }
     forAnswersText.indexOfCorrectAnswer = level.allAnswers.indexOf(level.correctAnswer);
-    return level
+    return level;
+}
+
+// end-------------------------------------
+
+
+// FUNCTIONS DRAW
+// start-----------------------------------
+function drawAnswerBlocks() {
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height);
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + answerOBJECT.width + answerOBJECT.offset, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height);
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 2, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height);
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 3, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height);
+}
+
+function drawMainModel() {
+    ctx.drawImage(img_rocket, MODEL.x, MODEL.y, MODEL.width, MODEL.height);
+    ctx.beginPath();
+    ctx.moveTo(0, 99);
+    ctx.lineTo(canvasWidth, 99);
+    ctx.stroke();
+    ctx.closePath();
 }
 
 function drawAnswerText() {
-    let level = prepareToDrawAnswerText()
+    let level = prepareToDrawAnswerText();
     ctx.beginPath();
     ctx.fillStyle = answerOBJECT.color;
     ctx.font = "18pt avenir";
-    let start_x = answerOBJECT.x + 20
-    let y = answerOBJECT.y + answerOBJECT.height / 2 + 15
-    let up_level = answerOBJECT.width + answerOBJECT.offset
+    let start_x = answerOBJECT.x + 20;
+    let y = answerOBJECT.y + answerOBJECT.height / 2 + 15;
+    let up_level = answerOBJECT.width + answerOBJECT.offset;
     for (let i = 0; i < 4; i++) {
         if (level.allAnswers[i].length <= 2) {
             ctx.fillText(level.allAnswers[i], start_x + up_level * i + 30, y);
@@ -296,11 +296,11 @@ function drawAnswerText() {
         }
     }
     ctx.closePath();
-    return level
+    return level;
 }
 
 function drawQuestionText() {
-    let level = drawAnswerText()
+    let level = drawAnswerText();
     ctx.beginPath();
     ctx.fillStyle = "#1F2533";
     ctx.font = "bold 24pt avenir";
@@ -310,27 +310,31 @@ function drawQuestionText() {
 
 function drawFinishGameScreen() {
     let text = `Your score: ${MODEL.score}`;
+    ctx.beginPath();
     ctx.clearRect(0, 0, GAME.width, GAME.height);
     ctx.fillStyle = '#000000';
     ctx.font = "36px avenir";
     ctx.textAlign = "center";
     ctx.fillText(text, GAME.width / 2 - 10, GAME.height / 2);
+    ctx.closePath();
 }
 
 function drawScore() {
+    ctx.beginPath();
     ctx.fillStyle = answerOBJECT.color;
     ctx.font = "bold 30px avenir";
     ctx.fillText("Score: " + MODEL.score, GAME.width / 2 - 60, GAME.height / 2 - 50);
+    ctx.closePath();
 }
 
 function drawReloadButton() {
-    img_reload_button.style.position = "absolute"
-    img_reload_button.style.width = '50px'
-    img_reload_button.style.height = '50px'
-    img_reload_button.style.top = '4%'
-    img_reload_button.style.left = '69%'
-    img_reload_button.style.transform = 'translate(-50%, -50%)'
-    document.body.appendChild(img_reload_button)
+    img_reload_button.style.position = "absolute";
+    img_reload_button.style.width = '50px';
+    img_reload_button.style.height = '50px';
+    img_reload_button.style.top = '4%';
+    img_reload_button.style.left = '69%';
+    img_reload_button.style.transform = 'translate(-50%, -50%)';
+    document.body.appendChild(img_reload_button);
 
     img_reload_button.addEventListener('click', function () {
         window.location.reload();
@@ -394,7 +398,7 @@ function moveAnswerBlocks() {
                 increasingSpeed();
             } else {
                 // отрисовка финального окна
-                drawFinishGameScreen()
+                drawFinishGameScreen();
             }
         }
         answerOBJECT.y += answerOBJECT.speed;
@@ -407,7 +411,7 @@ function moveAnswerBlocks() {
 
 function main() {
     if (MODEL.score === forAnswersText.levels.length - 1) {
-        drawFinishGameScreen()
+        drawFinishGameScreen();
     } else {
         initEventsListeners();
         drawGame();
