@@ -17,7 +17,7 @@ const img_rocket = new Image();
 img_rocket.src = 'static/img/rocket.png';
 
 const img_cloud = new Image();
-img_cloud.src = 'static/img/clouds2.png';
+img_cloud.src = 'static/img/clouds.png';
 
 const img_reload_button = new Image();
 img_reload_button.src = 'static/img/reload.png';
@@ -240,10 +240,10 @@ function shuffle(array) {
 // FUNCTIONS DRAW
 // start-----------------------------------
 function drawAnswerBlocks() {
-    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height)
-    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + answerOBJECT.width + answerOBJECT.offset, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height)
-    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 2, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height)
-    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 3, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height)
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height)
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + answerOBJECT.width + answerOBJECT.offset, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height)
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 2, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height)
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 3, answerOBJECT.y, answerOBJECT.width + 20, answerOBJECT.height)
 }
 
 function drawMainModel() {
@@ -280,19 +280,19 @@ function drawAnswerText() {
     let up_level = answerOBJECT.width + answerOBJECT.offset
     for (let i = 0; i < 4; i++) {
         if (level.allAnswers[i].length <= 2) {
-            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 24, y);
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 30, y);
         }
         if (level.allAnswers[i].length <= 4 && level.allAnswers[i].length > 2) {
-            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 16, y);
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 25, y);
         }
         if (level.allAnswers[i].length <= 6 && level.allAnswers[i].length > 4) {
-            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 7, y);
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 10, y);
         }
         if (level.allAnswers[i].length <= 8 && level.allAnswers[i].length > 6) {
-            ctx.fillText(level.allAnswers[i], start_x + up_level * i - 2, y);
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 5, y);
         }
         if (level.allAnswers[i].length > 8) {
-            ctx.fillText(level.allAnswers[i], start_x + up_level * i - 4, y);
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i, y);
         }
     }
     ctx.closePath();
