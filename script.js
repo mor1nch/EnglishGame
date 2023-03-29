@@ -41,85 +41,124 @@ let MODEL = {
 }
 
 let QUESTIONS = {
-    easy1: {
-        question: "test",
-        correctAnswer: "correct",
-        wrongAnswers: ["wrong1", "wrong2", "wrong3"],
-        allAnswers: shuffle(["correct", "wrong1", "wrong2", "wrong3"]),
+    presentSimple1: {
+        question: "I _ a book every evening.",
+        correctAnswer: "read",
+        allAnswers: shuffle(["read", "reads", "reading", "am reading"]),
+        theme: "Present Simple",
     },
-    easy2: {
-        question: "test1",
-        correctAnswer: "correct1",
-        wrongAnswers: ["w1", "w2", "w3"],
-        allAnswers: shuffle(["correct1", "w1", "w2", "w3"]),
+    presentSimple2: {
+        question: "Cats _ milk",
+        correctAnswer: "like",
+        allAnswers: shuffle(["like", "likes", "are", "is"]),
+        theme: "Present Simple",
     },
-    easy3: {
-        question: "test2",
-        correctAnswer: "correct2",
-        wrongAnswers: ["1", "2", "3"],
-        allAnswers: shuffle(["correct2", "1", "2", "3"]),
+    presentSimple3: {
+        question: "He _ play piano very well.",
+        correctAnswer: "doesn’t",
+        allAnswers: shuffle(["doesn’t", "don’t", "aren’t", "not"]),
+        theme: "Present Simple",
     },
-    medium1: {
-        question: "test3",
-        correctAnswer: "correct3",
-        wrongAnswers: ["5", "6", "7"],
-        allAnswers: shuffle(["correct3", "5", "6", "7"]),
+    presentSimple4: {
+        question: "Does she _ in a band?",
+        correctAnswer: "play",
+        allAnswers: shuffle(["play", "plays", "playing", "played"]),
+        theme: "Present Simple",
     },
-    medium2: {
-        question: "test4",
-        correctAnswer: "correct4",
-        wrongAnswers: ["8", "9", "10"],
-        allAnswers: shuffle(["correct4", "8", "9", "10"]),
+    presentSimple5: {
+        question: "My family and I _ together.",
+        correctAnswer: "eat",
+        allAnswers: shuffle(["eat", "eats", "eating", "ate"]),
+        theme: "Present Simple",
     },
-    medium3: {
-        question: "test5",
-        correctAnswer: "correct5",
-        wrongAnswers: ["D3", "D2", "D1"],
-        allAnswers: shuffle(["correct5", "D3", "D2", "D1"]),
+    presentSimple6: {
+        question: "The dog _ under the bed.",
+        correctAnswer: "sleeps",
+        allAnswers: shuffle(["sleeps", "sleep", "sleeping", "slept"]),
+        theme: "Present Simple",
     },
-    hard1: {
-        question: "test6",
-        correctAnswer: "correct6",
-        wrongAnswers: ["A2", "A1", "A3"],
-        allAnswers: shuffle(["correct6", "A2", "A1", "A3"]),
+    pastSimple1: {
+        question: "She _ learning English last year.",
+        correctAnswer: "started",
+        allAnswers: shuffle(["started", "starts", "start", "starting"]),
+        theme: "Past Simple",
     },
-    hard2: {
-        question: "test7",
-        correctAnswer: "correct7",
-        wrongAnswers: ["B1", "B2", "B3"],
-        allAnswers: shuffle(["correct7", "B1", "B2", "B3"]),
+    pastSimple2: {
+        question: "Harry _ his homework last night.",
+        correctAnswer: "did",
+        allAnswers: shuffle(["did", "done", "do", "doing"]),
+        theme: "Past Simple",
     },
-    hard3: {
-        question: "test8",
-        correctAnswer: "correct8",
-        wrongAnswers: ["C1", "C2", "C3"],
-        allAnswers: shuffle(["correct8", "C1", "C2", "C3"]),
+    pastSimple3: {
+        question: "I _ to the museum yesterday.",
+        correctAnswer: "went",
+        allAnswers: shuffle(["went", "was", "am", "do"]),
+        theme: "Past Simple",
     },
-    hard4: {
-        question: "test9",
-        correctAnswer: "correct9",
-        wrongAnswers: ["asd", "Cфв2", "C3fd"],
-        allAnswers: shuffle(["correct9", "asd", "Cфв2", "C3fd"]),
+    pastSimple4: {
+        question: "Gary didn’t _ French at school.",
+        correctAnswer: "study",
+        allAnswers: shuffle(["study", "studied", "studying", "studies"]),
+        theme: "Past Simple",
     },
-    hard5: {
-        question: "test10",
-        correctAnswer: "correct10",
-        wrongAnswers: ["C11", "C21", "C31"],
-        allAnswers: shuffle(["correct10", "C11", "C21", "C31"]),
+    pastSimple5: {
+        question: "I _ sleep last night.",
+        correctAnswer: "didn’t",
+        allAnswers: shuffle(["didn’t", "don’t", "wasn’t", "am not"]),
+        theme: "Past Simple",
     },
-    hard6: {
-        question: "test11",
-        correctAnswer: "correct11",
-        wrongAnswers: ["C12", "C22", "C32"],
-        allAnswers: shuffle(["correct11", "C12", "C22", "C32"]),
+    pastSimple6: {
+        question: "Students watched a movie and _ it.",
+        correctAnswer: "liked",
+        allAnswers: shuffle(["liked", "like", "likes", "liking"]),
+        theme: "Past Simple",
+    },
+    futureSimple1: {
+        question: "I _ open the window.",
+        correctAnswer: "will",
+        allAnswers: shuffle(["will", "am", "did", "was"]),
+        theme: "Future Simple",
+    },
+    futureSimple2: {
+        question: "_ she dance tomorrow?",
+        correctAnswer: "Will",
+        allAnswers: shuffle(["Will", "Does", "Was", "Did"]),
+        theme: "Future Simple",
+    },
+    futureSimple3: {
+        question: "_ I help you?",
+        correctAnswer: "Shall",
+        allAnswers: shuffle(["Shall", "will", "Do", "Am"]),
+        theme: "Future Simple",
+    },
+    futureSimple4: {
+        question: "You _ arrive on time.",
+        correctAnswer: "won’t",
+        allAnswers: shuffle(["won’t", "willn’t", "don’t", "aren’t"]),
+        theme: "Future Simple",
+    },
+    futureSimple5: {
+        question: "I _ you the secret.",
+        correctAnswer: "will tell",
+        allAnswers: shuffle(["will tell", "did tell", "tell", "am tell"]),
+        theme: "Future Simple",
+    },
+    futureSimple6: {
+        question: "Students _ listen to music.",
+        correctAnswer: "won’t",
+        allAnswers: shuffle(["won’t", "willn’t", "don’t", "aren’t"]),
+        theme: "Future Simple",
     },
 }
 
 let forTextObject = {
     levels: [
-        QUESTIONS.easy1, QUESTIONS.easy2, QUESTIONS.easy3,
-        QUESTIONS.medium1, QUESTIONS.medium2, QUESTIONS.medium3,
-        QUESTIONS.hard1, QUESTIONS.hard2, QUESTIONS.hard3, QUESTIONS.hard4, QUESTIONS.hard5, QUESTIONS.hard6,
+        QUESTIONS.presentSimple1, QUESTIONS.presentSimple2, QUESTIONS.presentSimple3,
+        QUESTIONS.presentSimple4, QUESTIONS.presentSimple5, QUESTIONS.presentSimple6,
+        QUESTIONS.pastSimple1, QUESTIONS.pastSimple2, QUESTIONS.pastSimple3,
+        QUESTIONS.pastSimple4, QUESTIONS.pastSimple5, QUESTIONS.pastSimple6,
+        QUESTIONS.futureSimple1, QUESTIONS.futureSimple2, QUESTIONS.futureSimple3,
+        QUESTIONS.futureSimple4, QUESTIONS.futureSimple5, QUESTIONS.futureSimple6,
     ],
     check: true,
     indexOfCorrectAnswer: 0,
@@ -246,6 +285,14 @@ function drawQuestionText() {
     ctx.closePath();
 }
 
+function drawFinishGameScreen() {
+    ctx.clearRect(0, 0, GAME.width, GAME.height);
+    ctx.fillStyle = MODEL.color;
+    ctx.font = "70px avenir";
+    ctx.textAlign = "center";
+    ctx.fillText("Stats loading...", GAME.width / 2, GAME.height / 2)
+}
+
 function drawScore() {
     ctx.fillStyle = "";
     ctx.font = "30px avenir";
@@ -267,7 +314,7 @@ function drawGame() {
 // FUNCTIONS GAMEPLAY
 // start-----------------------------------
 function increasingSpeed() {
-    if (MODEL.score >= 30) {
+    if (MODEL.score > 22) {
         answerOBJECT.speed = 5.5;
     } else {
         answerOBJECT.speed *= 1.08;
@@ -293,7 +340,8 @@ function moveAnswerBlocks() {
                 // увеличение скорости моделек ответов
                 increasingSpeed();
             } else {
-                alert('fail')
+                // при завершении игры вывод статистики
+                drawFinishGameScreen()
             }
         }
         answerOBJECT.y += answerOBJECT.speed;
@@ -304,8 +352,6 @@ function moveAnswerBlocks() {
 
 function isTrue(x) {
     let state = forTextObject.indexOfCorrectAnswer;
-    let text = `state - ${state}; x - ${x}; MODEL.x - ${MODEL.x}`
-    // alert(text)
     if (x === 480 && state === 3) {
         return true;
     } else if (x === 320 && state === 2) {
@@ -321,10 +367,14 @@ function isTrue(x) {
 // end-------------------------------------
 
 function main() {
-    initEventsListeners();
-    drawGame();
-    moveAnswerBlocks();
-    requestAnimationFrame(main);
+    if (MODEL.score === forTextObject.levels.length - 1) {
+        drawFinishGameScreen()
+    } else {
+        initEventsListeners();
+        drawGame();
+        moveAnswerBlocks();
+        requestAnimationFrame(main);
+    }
 }
 
 main();
