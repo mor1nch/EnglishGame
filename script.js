@@ -48,7 +48,7 @@ let QUESTIONS = {
         theme: "Present Simple",
     },
     presentSimple2: {
-        question: "Cats _ milk",
+        question: "Cats _ milk.",
         correctAnswer: "like",
         allAnswers: shuffle(["like", "likes", "are", "is"]),
         theme: "Present Simple",
@@ -128,7 +128,7 @@ let QUESTIONS = {
     futureSimple3: {
         question: "_ I help you?",
         correctAnswer: "Shall",
-        allAnswers: shuffle(["Shall", "will", "Do", "Am"]),
+        allAnswers: shuffle(["Shall", "Will", "Do", "Am"]),
         theme: "Future Simple",
     },
     futureSimple4: {
@@ -151,19 +151,22 @@ let QUESTIONS = {
     },
 }
 
-let forTextObject = {
-    levels: [
-        QUESTIONS.presentSimple1, QUESTIONS.presentSimple2, QUESTIONS.presentSimple3,
-        QUESTIONS.presentSimple4, QUESTIONS.presentSimple5, QUESTIONS.presentSimple6,
-        QUESTIONS.pastSimple1, QUESTIONS.pastSimple2, QUESTIONS.pastSimple3,
-        QUESTIONS.pastSimple4, QUESTIONS.pastSimple5, QUESTIONS.pastSimple6,
-        QUESTIONS.futureSimple1, QUESTIONS.futureSimple2, QUESTIONS.futureSimple3,
-        QUESTIONS.futureSimple4, QUESTIONS.futureSimple5, QUESTIONS.futureSimple6,
-    ],
+var levels_list = [
+    QUESTIONS.presentSimple1, QUESTIONS.presentSimple2, QUESTIONS.presentSimple3,
+    QUESTIONS.presentSimple4, QUESTIONS.presentSimple5, QUESTIONS.presentSimple6,
+    QUESTIONS.pastSimple1, QUESTIONS.pastSimple2, QUESTIONS.pastSimple3,
+    QUESTIONS.pastSimple4, QUESTIONS.pastSimple5, QUESTIONS.pastSimple6,
+    QUESTIONS.futureSimple1, QUESTIONS.futureSimple2, QUESTIONS.futureSimple3,
+    QUESTIONS.futureSimple4, QUESTIONS.futureSimple5, QUESTIONS.futureSimple6,
+];
+
+let forAnswersText = {
+    levels: shuffle(levels_list),
     check: true,
     indexOfCorrectAnswer: 0,
     cnt: 0,
 }
+
 // end-------------------------------------
 
 
@@ -248,26 +251,25 @@ function drawMainModel() {
 }
 
 function prepareToDrawAnswerText() {
-    let level = forTextObject.levels[forTextObject.cnt];
-    if (forTextObject.check === true) {
-        forTextObject.check = false;
+    let level = forAnswersText.levels[forAnswersText.cnt];
+    if (forAnswersText.check === true) {
+        forAnswersText.check = false;
 
-        if (MODEL.score <= forTextObject.levels.length - 1) {
-            forTextObject.cnt += 1;
+        if (MODEL.score <= forAnswersText.levels.length - 1) {
+            forAnswersText.cnt += 1;
         } else {
-            forTextObject.cnt = 0;
+            forAnswersText.cnt = 0;
         }
     }
-    forTextObject.indexOfCorrectAnswer = level.allAnswers.indexOf(level.correctAnswer);
+    forAnswersText.indexOfCorrectAnswer = level.allAnswers.indexOf(level.correctAnswer);
     return level
 }
-
 
 function drawAnswerText() {
     let level = prepareToDrawAnswerText()
     ctx.beginPath();
     ctx.fillStyle = "#0004FA";
-    ctx.font = "20pt avenir";
+    ctx.font = "18pt avenir";
     ctx.fillText(level.allAnswers[0], answerOBJECT.x + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
     ctx.fillText(level.allAnswers[1], answerOBJECT.x + 40 + answerOBJECT.width + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
     ctx.fillText(level.allAnswers[2], answerOBJECT.x + 40 * 2 + answerOBJECT.width * 2 + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
@@ -280,23 +282,24 @@ function drawQuestionText() {
     let level = drawAnswerText()
     ctx.beginPath();
     ctx.fillStyle = "#1F2533";
-    ctx.font = "bold 28pt avenir";
-    ctx.fillText(level.question, 30, 60);
+    ctx.font = "bold 26pt avenir";
+    ctx.fillText(level.question, 20, 60);
     ctx.closePath();
 }
 
 function drawFinishGameScreen() {
+    let text = `Your score: ${MODEL.score}`;
     ctx.clearRect(0, 0, GAME.width, GAME.height);
     ctx.fillStyle = MODEL.color;
-    ctx.font = "70px avenir";
+    ctx.font = "36px avenir";
     ctx.textAlign = "center";
-    ctx.fillText("Stats loading...", GAME.width / 2, GAME.height / 2)
+    ctx.fillText(text, GAME.width / 2 - 10, GAME.height / 2)
 }
 
 function drawScore() {
     ctx.fillStyle = "";
-    ctx.font = "30px avenir";
-    ctx.fillText("Score: " + MODEL.score, GAME.width / 2 - 50, GAME.height / 2 - 50);
+    ctx.font = "bold 30px avenir";
+    ctx.fillText("Score: " + MODEL.score, GAME.width / 2 - 60, GAME.height / 2 - 50);
 }
 
 function drawGame() {
@@ -326,7 +329,21 @@ function comeBackToStartPosition() {
     answerOBJECT.y = 100;
     MODEL.x = 120 + 40;
     MODEL.y = canvasHeight - 80;
-    forTextObject.check = true;
+    forAnswersText.check = true;
+}
+
+function isTrue(x) {
+    let state = forAnswersText.indexOfCorrectAnswer;
+    if (x === 480 && state === 3) {
+        return true;
+    } else if (x === 320 && state === 2) {
+        return true;
+    } else if (x === 160 && state === 1) {
+        return true;
+    } else if (x === 0 && state === 0) {
+        return true;
+    }
+    return false;
 }
 
 function moveAnswerBlocks() {
@@ -340,7 +357,7 @@ function moveAnswerBlocks() {
                 // увеличение скорости моделек ответов
                 increasingSpeed();
             } else {
-                // при завершении игры вывод статистики
+                // отрисовка финального окна
                 drawFinishGameScreen()
             }
         }
@@ -350,24 +367,10 @@ function moveAnswerBlocks() {
     }
 }
 
-function isTrue(x) {
-    let state = forTextObject.indexOfCorrectAnswer;
-    if (x === 480 && state === 3) {
-        return true;
-    } else if (x === 320 && state === 2) {
-        return true;
-    } else if (x === 160 && state === 1) {
-        return true;
-    } else if (x === 0 && state === 0) {
-        return true;
-    }
-    return false;
-}
-
 // end-------------------------------------
 
 function main() {
-    if (MODEL.score === forTextObject.levels.length - 1) {
+    if (MODEL.score === forAnswersText.levels.length - 1) {
         drawFinishGameScreen()
     } else {
         initEventsListeners();
