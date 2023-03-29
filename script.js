@@ -44,7 +44,7 @@ let QUESTIONS = {
     presentSimple1: {
         question: "I _ a book every evening.",
         correctAnswer: "read",
-        allAnswers: shuffle(["read", "reads", "reading", "am reading"]),
+        allAnswers: shuffle(["read", "reads", "reading", "redan"]),
         theme: "Present Simple",
     },
     presentSimple2: {
