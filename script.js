@@ -11,40 +11,50 @@ canvas.height = canvasHeight;
 // end-------------------------------------
 
 
+// Picture Creating
+// start-----------------------------------
+const img_rocket = new Image();
+img_rocket.src = 'static/img/rocket.png';
+const img_cloud = new Image();
+img_cloud.src = 'static/img/clouds2.png';
+// end-------------------------------------
+
+
 // OBJECTS
 // start-----------------------------------
 let answerOBJECT = {
+    pic: img_cloud,
     height: 100,
     width: 120,
     x: 0,
     y: 100,
     xDirection: 0.5,
-    color: "#F58E7E",
+    color: "#0004FA",
     speed: 0.5,
-}
+    offset: 40,
+};
 
 let GAME = {
     width: canvasWidth,
     height: canvasHeight,
-    background: "#C0FF89",
-}
+};
 
 let MODEL = {
-    x: 0,
-    y: canvasHeight - 80,
-    width: 120,
-    height: 80,
-    color: "#1E90FF",
+    pic: img_rocket,
+    x: 160,
+    y: canvasHeight - 115,
+    width: 140,
+    height: 113,
     xDirection: 160,
     yDirection: 50,
     score: 0,
-}
+};
 
 let QUESTIONS = {
     presentSimple1: {
         question: "I _ a book every evening.",
         correctAnswer: "read",
-        allAnswers: shuffle(["read", "reads", "reading", "redan"]),
+        allAnswers: shuffle(["read", "reads", "reading", "readed"]),
         theme: "Present Simple",
     },
     presentSimple2: {
@@ -149,7 +159,7 @@ let QUESTIONS = {
         allAnswers: shuffle(["won’t", "willn’t", "don’t", "aren’t"]),
         theme: "Future Simple",
     },
-}
+};
 
 var levels_list = [
     QUESTIONS.presentSimple1, QUESTIONS.presentSimple2, QUESTIONS.presentSimple3,
@@ -165,7 +175,7 @@ let forAnswersText = {
     check: true,
     indexOfCorrectAnswer: 0,
     cnt: 0,
-}
+};
 
 // end-------------------------------------
 
@@ -196,8 +206,8 @@ function modelPositionLimits() {
     if (MODEL.x < 0) {
         MODEL.x = 0;
     }
-    if (MODEL.x + MODEL.width > GAME.width) {
-        MODEL.x = GAME.width - MODEL.width;
+    if (MODEL.x + 120 > GAME.width) {
+        MODEL.x = GAME.width - 120;
     }
     if (MODEL.y > GAME.height - MODEL.height) {
         MODEL.y = GAME.height - MODEL.height;
@@ -224,25 +234,40 @@ function shuffle(array) {
     return array;
 }
 
+// function Restart() {
+//     canvasContext1.clearRect(0, 0, window.innerWidth, window.innerHeight)
+//     document.body.removeChild(rule)
+//
+//     let gameVic = document.createElement("img");
+//     gameVic.src = './imgs/rel.png';
+//
+//     gameVic.style.position = "absolute"
+//     gameVic.style.width = window.innerWidth / 6 + "px"
+//     gameVic.style.height = window.innerHeight / 7 + "px"
+//     gameVic.style.top = '85%'
+//     gameVic.style.left = '50%'
+//     gameVic.style.transform = 'translate(-50%, -50%)'
+//     document.body.appendChild(gameVic)
+//
+//     gameVic.addEventListener('click', function () {
+//         location.reload()
+//     })
+// }
+
 // end-------------------------------------
 
 
 // FUNCTIONS DRAW
 // start-----------------------------------
 function drawAnswerBlocks() {
-    ctx.beginPath();
-    ctx.fillStyle = answerOBJECT.color;
-    ctx.fillRect(answerOBJECT.x, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height);
-    ctx.fillRect(answerOBJECT.width + 40, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height);
-    ctx.fillRect(answerOBJECT.width * 2 + 80, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height);
-    ctx.fillRect(answerOBJECT.width * 3 + 120, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height);
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height)
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + answerOBJECT.width + answerOBJECT.offset, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height)
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 2, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height)
+    ctx.drawImage(answerOBJECT.pic, answerOBJECT.x + (answerOBJECT.width + answerOBJECT.offset) * 3, answerOBJECT.y, answerOBJECT.width, answerOBJECT.height)
 }
 
 function drawMainModel() {
-    ctx.beginPath();
-    ctx.fillStyle = MODEL.color;
-    ctx.fillRect(MODEL.x, MODEL.y, MODEL.width, MODEL.height);
-    ctx.closePath();
+    ctx.drawImage(img_rocket, MODEL.x, MODEL.y, MODEL.width, MODEL.height)
     ctx.beginPath();
     ctx.moveTo(0, 99);
     ctx.lineTo(canvasWidth, 99);
@@ -268,12 +293,28 @@ function prepareToDrawAnswerText() {
 function drawAnswerText() {
     let level = prepareToDrawAnswerText()
     ctx.beginPath();
-    ctx.fillStyle = "#0004FA";
+    ctx.fillStyle = answerOBJECT.color;
     ctx.font = "18pt avenir";
-    ctx.fillText(level.allAnswers[0], answerOBJECT.x + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
-    ctx.fillText(level.allAnswers[1], answerOBJECT.x + 40 + answerOBJECT.width + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
-    ctx.fillText(level.allAnswers[2], answerOBJECT.x + 40 * 2 + answerOBJECT.width * 2 + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
-    ctx.fillText(level.allAnswers[3], answerOBJECT.x + 40 * 3 + answerOBJECT.width * 3 + 15, answerOBJECT.y + answerOBJECT.height / 2 + 5);
+    let start_x = answerOBJECT.x + 20
+    let y = answerOBJECT.y + answerOBJECT.height / 2 + 15
+    let up_level = answerOBJECT.width + answerOBJECT.offset
+    for (let i = 0; i < 4; i++) {
+        if (level.allAnswers[i].length <= 2) {
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 24, y);
+        }
+        if (level.allAnswers[i].length <= 4 && level.allAnswers[i].length > 2) {
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 16, y);
+        }
+        if (level.allAnswers[i].length <= 6 && level.allAnswers[i].length > 4) {
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i + 7, y);
+        }
+        if (level.allAnswers[i].length <= 8 && level.allAnswers[i].length > 6) {
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i - 2, y);
+        }
+        if (level.allAnswers[i].length > 8) {
+            ctx.fillText(level.allAnswers[i], start_x + up_level * i - 4, y);
+        }
+    }
     ctx.closePath();
     return level
 }
@@ -282,7 +323,7 @@ function drawQuestionText() {
     let level = drawAnswerText()
     ctx.beginPath();
     ctx.fillStyle = "#1F2533";
-    ctx.font = "bold 26pt avenir";
+    ctx.font = "bold 24pt avenir";
     ctx.fillText(level.question, 20, 60);
     ctx.closePath();
 }
@@ -290,14 +331,14 @@ function drawQuestionText() {
 function drawFinishGameScreen() {
     let text = `Your score: ${MODEL.score}`;
     ctx.clearRect(0, 0, GAME.width, GAME.height);
-    ctx.fillStyle = MODEL.color;
+    ctx.fillStyle = answerOBJECT.color;
     ctx.font = "36px avenir";
     ctx.textAlign = "center";
-    ctx.fillText(text, GAME.width / 2 - 10, GAME.height / 2)
+    ctx.fillText(text, GAME.width / 2 - 10, GAME.height / 2);
 }
 
 function drawScore() {
-    ctx.fillStyle = "";
+    ctx.fillStyle = answerOBJECT.color;
     ctx.font = "bold 30px avenir";
     ctx.fillText("Score: " + MODEL.score, GAME.width / 2 - 60, GAME.height / 2 - 50);
 }
@@ -327,20 +368,20 @@ function increasingSpeed() {
 
 function comeBackToStartPosition() {
     answerOBJECT.y = 100;
-    MODEL.x = 120 + 40;
-    MODEL.y = canvasHeight - 80;
+    MODEL.x = answerOBJECT.width + 40;
+    MODEL.y = canvasHeight - 115;
     forAnswersText.check = true;
 }
 
 function isTrue(x) {
     let state = forAnswersText.indexOfCorrectAnswer;
-    if (x === 480 && state === 3) {
+    if (x >= 480 && state === 3) {
         return true;
-    } else if (x === 320 && state === 2) {
+    } else if (x >= 320 && state === 2) {
         return true;
-    } else if (x === 160 && state === 1) {
+    } else if (x >= 160 && state === 1) {
         return true;
-    } else if (x === 0 && state === 0) {
+    } else if (x >= 0 && state === 0) {
         return true;
     }
     return false;
@@ -348,8 +389,8 @@ function isTrue(x) {
 
 function moveAnswerBlocks() {
     // если блок с ответами соприкасается с блоком модельки
-    if (answerOBJECT.y < GAME.height - MODEL.height - 20) {
-        if (answerOBJECT.y >= MODEL.y - MODEL.height - 20) {
+    if (answerOBJECT.y < GAME.height - MODEL.height + 20) {
+        if (answerOBJECT.y >= MODEL.y - MODEL.height + 20) {
             let state = isTrue(MODEL.x);
             if (state === true) {
                 // смещение главной модельки на исходное положение
